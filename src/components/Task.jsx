@@ -1,8 +1,12 @@
 import React from 'react'
 
-const Task = () => {
+const Task = ({ task }) => {
   return (
-    <div>Task</div>
+    <li key={task.id}>
+      <h6>{task.title}</h6>
+      <p>{task.description}</p>
+      <button className='complete'></button>
+    </li>
   )
 }
 
