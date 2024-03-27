@@ -1,28 +1,22 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { v4 as uuidv4 } from 'uuid'
-import { useGroups } from '../context/GroupsContext'
+import { useGroups } from '../../context/GroupsContext'
 
 import Task from './Task'
 
 const TasksList = () => {
-  const [taskName, setTaskName] = useState('')
+  const [taskTitle, setTaskTitle] = useState('')
   const [error, setError] = useState('')
-  const { activeGroup, setActiveGroup, groups, setGroups } = useGroups()
+  
+  const { groups, setGroups, activeGroupId } = useGroups()
+  const activeGroup = groups.find(group => group.id === activeGroupId);
 
-  const updateGroupTasks = (groups, activeGroupId, newTask) => {
-    return groups.map(group => {
-      if (group.id === activeGroupId) {
-        return {
-          ...group,
-          tasks: [newTask, ...group.tasks]
-        };
-      }
-      return group
-    })
-  }
+   const sortedTasks = activeGroup ? [...activeGroup.tasks].sort((a, b) => {
+    return a.completed === b.completed ? 0 : a.completed ? 1 : -1;
+  }) : []
 
   const handleAddTask = () => {
-    if (taskName.trim() === '') {
+    if (taskTitle.trim() === '') {
       setError('Task name cannot be empty!')
       return
     }
@@ -34,23 +28,25 @@ const TasksList = () => {
 
     const newTask = {
       id: uuidv4(),
-      title: taskName.trim()
+      title: taskTitle.trim(),
+      completed: false
     }
 
-    const updatedGroups = updateGroupTasks(groups, activeGroup.id, newTask)
+    const updatedGroup = {
+      ...activeGroup,
+      tasks: [newTask, ...activeGroup.tasks, ]
+    };
+
+    const updatedGroups = groups.map(group => {
+      return group.id === activeGroupId ? updatedGroup : group
+    });
 
     setGroups(updatedGroups)
-    setTaskName('')
-    setError('')
-
-    // Need re-render of active group to render tasks
-    setActiveGroup(activeGroup => ({
-      ...activeGroup,
-      tasks: [newTask, ...activeGroup.tasks]
-    }))
+    setTaskTitle('')
   }
 
-  console.log(groups)
+  console.log(groups, 'groups')
+  console.log(activeGroupId, 'activeGroupId')
 
   return (
     <div className='tasks'>
@@ -59,9 +55,9 @@ const TasksList = () => {
       </div>
       <div className='tasks-body'>
         <ul className='groups-body'>
-          {activeGroup?.tasks.map((task) => {
+          {sortedTasks?.map((task) => {
             return (
-              <Task task={task} />
+              <Task task={task} key={task.id} />
             )
           })}
         </ul>
@@ -73,8 +69,8 @@ const TasksList = () => {
             id='add-task'
             name='add-task'
             placeholder='Add task...'
-            value={taskName}
-            onChange={(e) => setTaskName(e.target.value)}
+            value={taskTitle}
+            onChange={(e) => setTaskTitle(e.target.value)}
           />
           <button onClick={handleAddTask}>
             <svg width="25" height="24" viewBox="0 0 25 24" fill="none" xmlns="http://www.w3.org/2000/svg">

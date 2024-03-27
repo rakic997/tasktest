@@ -1,21 +1,21 @@
 import React, { useState } from 'react'
-import { v4 as uuidv4 } from 'uuid';
-import { useGroups } from '../context/GroupsContext'
+import { v4 as uuidv4 } from 'uuid'
+import { useGroups } from '../../context/GroupsContext'
 
 const GroupsList = () => {
-  const [groupName, setGroupName] = useState('')
-  const [error, setError] = useState('');
-  const { groups, setGroups, setActiveGroup } = useGroups();
+  const [groupTitle, setGroupTitle] = useState('')
+  const [error, setError] = useState('')
+  const { groups, setGroups, setActiveGroupId } = useGroups()
 
   const handleAddGroup = () => {
-    if (groupName.trim() === '') {
-      setError('Group name cannot be empty!');
-      return;
+    if (groupTitle.trim() === '') {
+      setError('Group name cannot be empty!')
+      return
     }
 
     const newGroup = {
       id: uuidv4(),
-      title: groupName,
+      title: groupTitle,
       tasks: [],
     }
 
@@ -23,8 +23,8 @@ const GroupsList = () => {
       ...prevGroups,
       newGroup
     ])
-    setGroupName('')
-    setError('');
+    setGroupTitle('')
+    setError('')
   }
 
   return (
@@ -38,7 +38,7 @@ const GroupsList = () => {
             return (
               <li
                 key={group.id}
-                onClick={() => setActiveGroup(group)}>
+                onClick={() => setActiveGroupId(group.id)}>
                 {group.title}
               </li>
             )
@@ -51,9 +51,9 @@ const GroupsList = () => {
             type='text'
             id='add-group'
             name='add-task'
-            placeholder='New gorup...'
-            value={groupName}
-            onChange={(e) => setGroupName(e.target.value)}
+            placeholder='New group...'
+            value={groupTitle}
+            onChange={(e) => setGroupTitle(e.target.value)}
           />
           <button onClick={handleAddGroup}>
             <svg width="25" height="24" viewBox="0 0 25 24" fill="none" xmlns="http://www.w3.org/2000/svg">

@@ -1,7 +1,5 @@
-import { useState } from 'react'
-
-import GroupsList from './components/GroupsList'
-import TasksList from './components/TasksList'
+import GroupsList from './components/Group/GroupsList'
+import TasksList from './components/Task/TasksList'
 
 function App() {
 

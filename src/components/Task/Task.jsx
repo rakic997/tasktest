@@ -1,39 +1,13 @@
 import React, { useState } from 'react'
-import { useGroups } from '../context/GroupsContext'
+import { useGroups } from '../../context/GroupsContext'
 
-import Modal from './Modal'
+import Modal from '../UI/Modal'
 
 const Task = ({ task }) => {
   const [isOpen, setIsOpen] = useState(false)
   const [editedTitle, setEditedTitle] = useState(task.title)
   const [editedDescription, setEditedDescription] = useState(task.description)
-  const { groups, setGroups, activeGroup, setActiveGroup } = useGroups()
-
-  const openModal = () => {
-    setIsOpen(true)
-  };
-
-  const closeModal = () => {
-    setIsOpen(false)
-  };
-
-  const handleCompleteTask = () => {
-    e.stopPropagation(); // Prevent modal from opening
-
-    const updatedGroups = groups.map(group => {
-      if (group.tasks.find(groupTask => groupTask.id === task.id)) {
-        return {
-          ...group,
-          tasks: group.tasks.map(groupTask =>
-            groupTask.id === task.id ? { ...groupTask, completed: true } : groupTask
-          )
-        }
-      }
-      return group
-    })
-
-    setGroups(updatedGroups)
-  }
+  const { groups, setGroups, activeGroupId, setActiveGroupId } = useGroups()
 
   const handleTitleChange = (e) => {
     setEditedTitle(e.target.value)
@@ -43,48 +17,61 @@ const Task = ({ task }) => {
     setEditedDescription(e.target.value)
   }
 
-  const handleSaveChanges = () => {
-    const updatedTask = {
-      ...task,
-      title: editedTitle,
-      description: editedDescription
-    }
+  const toggleModal = () => {
+    setIsOpen(!isOpen)
+  };
+
+  const handleCompleteTask = (e) => {
+    e.stopPropagation(); 
 
     const updatedGroups = groups.map(group => {
-      if (group.tasks.find(groupTask => groupTask.id === task.id)) {
-        return {
-          ...group,
-          tasks: group.tasks.map(groupTask =>
-            groupTask.id === task.id ? updatedTask : groupTask
-          )
-        }
+      if (group.id === activeGroupId) {
+        const updatedTasks = group.tasks.map(groupTask => {
+          if (groupTask.id === task.id) {
+            return { ...groupTask, completed: !groupTask.completed };
+          }
+          return groupTask;
+        });
+        return { ...group, tasks: updatedTasks };
       }
-      return group
-    })
-
+      return group;
+    });
     setGroups(updatedGroups);
-    closeModal();
+  };
 
-     // Need re-render of active group to render tasks
-    const updatedActiveGroup = updatedGroups.find(group => group.id === activeGroup.id)
-    setActiveGroup(updatedActiveGroup)
-  }
+  const handleSaveChanges = () => {
+    const updatedGroups = groups.map(group => {
+      if (group.id === activeGroupId) {
+        const updatedTasks = group.tasks.map(groupTask => {
+          if (groupTask.id === task.id) {
+            return { ...groupTask, title: editedTitle, description: editedDescription };
+          }
+          return groupTask;
+        });
+        return { ...group, tasks: updatedTasks };
+      }
+      return group;
+    });
+    setGroups(updatedGroups);
+    toggleModal(); 
+  };
 
   const handleDeleteTask = () => {
-    const updatedGroups = groups.map(group => ({
-      ...group,
-      tasks: group.tasks.filter(groupTask => groupTask.id !== task.id)
-    }))
-
-    setGroups(updatedGroups)
-    closeModal()
-  }
+    const updatedGroups = groups.map(group => {
+      if (group.id === activeGroupId) {
+        const updatedTasks = group.tasks.filter(groupTask => groupTask.id !== task.id);
+        return { ...group, tasks: updatedTasks };
+      }
+      return group;
+    });
+    setGroups(updatedGroups);
+    toggleModal();
+  };
 
   return (
     <li
-      key={task.id}
       className={task.completed ? 'completed' : ''}
-      onClick={openModal}>
+      onClick={toggleModal}>
       <h6>{task.title}</h6>
       <p>{task.description}</p>
       <button className='complete' onClick={handleCompleteTask} disabled={task.completed}>
@@ -94,7 +81,7 @@ const Task = ({ task }) => {
         </svg>
       </button>
 
-      <Modal isOpen={isOpen} closeModal={closeModal}>
+      <Modal isOpen={isOpen} setIsOpen={setIsOpen}>
         <div className="task-details">
           <input
             type="text"
@@ -107,6 +94,7 @@ const Task = ({ task }) => {
           />
           <button onClick={handleSaveChanges}>Save Changes</button>
           <button onClick={handleDeleteTask}>Delete</button>
+          <button onClick={handleCompleteTask}>Complete</button>
         </div>
       </Modal>
     </li>
