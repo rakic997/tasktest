@@ -1,5 +1,5 @@
 import React from 'react';
-import './modal.scss';
+import './ui.scss';
 
 const Modal = ({ isOpen, setIsOpen, children }) => {
   if (!isOpen) return null;

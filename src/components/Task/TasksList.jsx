@@ -17,7 +17,6 @@ const TasksList = () => {
 
   const handleAddTask = () => {
     if (!activeGroup) {
-      setError('No active group selected!')
       return
     }
 
@@ -65,6 +64,7 @@ const TasksList = () => {
           value={taskTitle}
           onChange={(e) => setTaskTitle(e.target.value)}
           onClick={handleAddTask}
+          disabled={!activeGroup}
         />
       </div>
     </div>

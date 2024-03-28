@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
+import './ui.scss';
 
-const AddItemInput = ({ placeholder, value, onChange, onClick, className }) => {
+const AddItemInput = ({ placeholder, value, onChange, onClick, className, disabled }) => {
     const [error, setError] = useState('')
 
     const handleClick = () => {
@@ -21,8 +22,9 @@ const AddItemInput = ({ placeholder, value, onChange, onClick, className }) => {
                 placeholder={placeholder}
                 value={value}
                 onChange={onChange}
+                disabled={disabled}
             />
-            <button onClick={handleClick}>
+            <button onClick={handleClick} disabled={disabled}>
                 <svg width="25" height="24" viewBox="0 0 25 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <rect x="0.5" y="0.5" width="23.75" height="23" rx="7.5" fill="#FCA311" />
                     <rect x="0.5" y="0.5" width="23.75" height="23" rx="7.5" stroke="#FCA311" />

@@ -23,43 +23,39 @@ const Task = ({ task, activeGroupTitle }) => {
     setIsOpen(!isOpen)
   }
 
-  const toggleConfirmationModal = () => {
-    setIsConfirmationOpen(!isConfirmationOpen)
-  }
-
   const handleDeleteTask = () => {
-    setShowConfirmation(true);
+    setShowConfirmation(true)
   };
 
   const confirmDeleteTask = () => {
     const updatedGroups = groups.map(group => {
       if (group.id === activeGroupId) {
-        const updatedTasks = group.tasks.filter(groupTask => groupTask.id !== task.id);
+        const updatedTasks = group.tasks.filter(groupTask => groupTask.id !== task.id)
         return { ...group, tasks: updatedTasks }
       }
-      return group;
-    });
+      return group
+    })
     setGroups(updatedGroups)
-    toggleConfirmationModal()
     toggleModal()
   }
 
   const handleCompleteTask = (e) => {
-    e.stopPropagation();
+    e.stopPropagation()
 
     const updatedGroups = groups.map(group => {
       if (group.id === activeGroupId) {
         const updatedTasks = group.tasks.map(groupTask => {
           if (groupTask.id === task.id) {
-            return { ...groupTask, completed: !groupTask.completed };
+            return { ...groupTask, completed: !groupTask.completed }
           }
-          return groupTask;
+          return groupTask
         });
-        return { ...group, tasks: updatedTasks };
+        return { ...group, tasks: updatedTasks }
       }
-      return group;
+      return group
     });
-    setGroups(updatedGroups);
+    setGroups(updatedGroups)
+    setIsOpen(false)
   }
 
   const handleSaveChanges = () => {
@@ -67,17 +63,17 @@ const Task = ({ task, activeGroupTitle }) => {
       if (group.id === activeGroupId) {
         const updatedTasks = group.tasks.map(groupTask => {
           if (groupTask.id === task.id) {
-            return { ...groupTask, title: editedTitle, description: editedDescription };
+            return { ...groupTask, title: editedTitle, description: editedDescription }
           }
           return groupTask;
         });
-        return { ...group, tasks: updatedTasks };
+        return { ...group, tasks: updatedTasks }
       }
-      return group;
+      return group
     });
-    setGroups(updatedGroups);
-    toggleModal();
-  };
+    setGroups(updatedGroups)
+    toggleModal()
+  }
 
   return (
     <li
@@ -127,8 +123,10 @@ const Task = ({ task, activeGroupTitle }) => {
             {showConfirmation && (
               <div className='confirmation'>
                 <p>Are you sure you want to delete task?</p>
-                <button onClick={confirmDeleteTask}>Delete</button>
-                <button onClick={() => setShowConfirmation(false)}>Cancel</button>
+                <div className='button-group'>
+                  <button onClick={confirmDeleteTask}>Delete</button>
+                  <button onClick={() => setShowConfirmation(false)}>Cancel</button>
+                </div>
               </div>
             )}
           </div>

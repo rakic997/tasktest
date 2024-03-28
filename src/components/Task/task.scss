@@ -1,19 +1,63 @@
 @import '../../style/index.scss';
 
 .tasks {
+    position: relative;
     width: 100%;
-    max-width: 428px
+    max-width: 428px;
+
+    @include ipad {
+        margin-left: 60px;
+    }
+
+    @include mobile {
+        margin-top: 40px;
+    }
+
+    &-header {
+        position: absolute;
+        top: -45px;
+
+        @include mobile {
+            position: static;
+        }
+
+        h2 {
+            font-size: 32px;
+            font-weight: 700;
+
+            @include mobile {
+                font-size: 24px;
+            }
+        }
+    }
+
+    &-body {
+        height: 654px;
+
+        @include mobile {
+            height: auto;
+            height: calc(360px - 50px);
+            overflow-y: auto
+        }
+    }
 }
 
 .task {
     @include flex-container(flex, center, space-between);
-    max-width: 428px;
-    width: 100%;
+    width: 428px;
     height: 51px;
     background-color: $primary;
     padding: 16px 8.25px 16px 24px;
     margin-bottom: 16px;
     border-radius: 8px;
+
+    @include ipad {
+        width: 100%;
+    }
+
+    @include mobile {
+        width: 100%;
+    }
 
     h6 {
         font-size: 16px;
@@ -30,6 +74,27 @@
 
         svg {
             width: 24.75px;
+        }
+    }
+
+    &:hover {
+        cursor: pointer;
+    }
+
+    .complete {
+        svg {
+            &:hover {
+                cursor: pointer;
+                transition: 0.2s ease-in;
+
+                rect {
+                    fill: $secondary;
+                }
+
+                path {
+                    fill: $tertiary;
+                }
+            }
         }
     }
 }
@@ -57,10 +122,16 @@
         background-color: $primary;
         border-radius: 8px;
         padding: 0 10px;
+        font-size: 16px;
+        font-weight: 400;
         color: $tertiary;
+        font-style: italic;
 
         &::placeholder {
+            font-size: 16px;
+            font-weight: 400;
             color: $tertiary;
+            font-style: italic;
         }
     }
 
@@ -93,6 +164,12 @@
         @include flex-container(flex, center, space-between);
         margin-bottom: 15px;
 
+        h6 {
+            font-size: 12px;
+            font-weight: 400;
+            color: $secondary;
+        }
+
         .button-group {
             @include flex-container(flex, center, center);
 
@@ -100,10 +177,17 @@
                 &:first-child {
                     line-height: 10px;
                     margin-right: 8px;
+
+                    &:hover {
+                        cursor: pointer;
+                        transform: 0.2 ease;
+                        opacity: 0.86;
+                    }
                 }
+
                 &:last-child {
                     position: relative;
-                    width: 90px;
+                    width: 86.76px;
                     height: 24px;
                     border: 1px solid $secondary;
                     border-radius: 8px;
@@ -115,7 +199,7 @@
                     svg {
                         position: absolute;
                         top: 50%;
-                        left: 14px;
+                        left: 12.5px;
                         transform: translate(-50%, -50%);
                     }
                 }
@@ -130,7 +214,7 @@
             font-size: 24px;
             font-weight: 700;
             color: $tertiary;
-            margin-bottom: 10px;
+            margin-bottom: 27px;
             padding-left: 0;
         }
 
@@ -149,6 +233,11 @@
             line-height: 19.36px;
             color: $tertiary;
             margin-top: 10px;
+            border-radius: 8px;
+
+            @include mobile {
+                height: 260px;
+            }
         }
 
         .save-button {
@@ -176,8 +265,41 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+    width: 360px;
     background-color: $primary;
-    padding: 16px 24px;
+    padding: 26px 18px;
     border-radius: 8px;
     text-align: center;
+
+    p {
+        font-size: 15px;
+        margin-bottom: 15px;
+    }
+
+    .button-group {
+        button {
+            width: 112px;
+            height: 24px;
+            border-radius: 8px;
+            color: $tertiary;
+            font-size: 700;
+            font-size: 13px;
+
+            &:first-child {
+                background-color: red;
+            }
+
+            &:last-child {
+                margin-left: 15px;
+                background-color: #161616;
+            }
+
+            &:hover {
+                opacity: 0.86;
+                transition: 0.2s ease-in;
+                cursor: pointer;
+            }
+        }
+    }
+
 }

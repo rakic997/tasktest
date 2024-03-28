@@ -1,13 +1,13 @@
 import React, { useState } from 'react'
 import { v4 as uuidv4 } from 'uuid'
-import './group-list.scss';
+import './group-list.scss'
 
 import { useGroups } from '../../context/GroupsContext'
-import AddItemInput from '../UI/AddItemInput';
+import AddItemInput from '../UI/AddItemInput'
 
 const GroupsList = () => {
   const [groupTitle, setGroupTitle] = useState('')
-  const { groups, setGroups, setActiveGroupId } = useGroups()
+  const { groups, setGroups, activeGroupId, setActiveGroupId } = useGroups()
 
   const handleAddGroup = () => {
     const newGroup = {
@@ -21,7 +21,6 @@ const GroupsList = () => {
       newGroup
     ])
     setGroupTitle('')
-    setError('')
   }
 
   return (
@@ -35,7 +34,7 @@ const GroupsList = () => {
             return (
               <li
                 key={group.id}
-                className='group'
+                className={group.id === activeGroupId ? 'group active' : 'group'}
                 onClick={() => setActiveGroupId(group.id)}>
                 <h6>{group.title}</h6>
               </li>
