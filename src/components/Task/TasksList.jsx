@@ -45,7 +45,7 @@ const TasksList = () => {
         <h2>Tasks - {activeGroup?.title}</h2>
       </div>
       <div className='tasks-body'>
-        <ul className='groups-body' role='list'>
+        <ul className='tasks-list' role='list'>
           {sortedTasks?.map((task) => {
             return (
               <Task 

@@ -1,4 +1,5 @@
 @import '../../style/index.scss';
+@import '../UI/ui.scss';
 
 .groups {
     position: absolute;
@@ -37,9 +38,9 @@
         height: 80%;
         max-height: calc(100% - 20px);
         overflow-y: auto;
+        overflow-x: hidden;
         padding: 0 24px;
         
-
         .group {
             margin-bottom: 14px;
 
@@ -65,71 +66,21 @@
     }
 }
 
-.add-group-input {
-    position: relative;
-
-    input {
-        width: 100%;
-        height: 47px;
-        background-color: #161616;
-        border-radius: 8px;
-        padding: 0 10px;
-        color: $tertiary;
-        font-style: italic;
-
-        &::placeholder {
-            color: $tertiary;
-            font-style: italic;
-        }
-    }
-
-    button {
-        position: absolute;
-        top: 50%;
-        right: 10px;
-        transform: translate(5px, -50%);
-        line-height: 5px;
-
-        svg {
-            width: 100%;
-            height: 100%;
-        }
-
-        &:hover {
-            cursor: pointer;
-
-            svg {
-                opacity: 0.89;
-                transition: 0.12s ease;
-            }
-        }
-    }
-}
-
-
 .groups-body::-webkit-scrollbar {
     width: 3px;
     border-radius: 8px;
-    /* Width of the scrollbar */
 }
 
-/* Track */
 .groups-body::-webkit-scrollbar-track {
     background: $tertiary;
-
-    /* Color of the track */
 }
 
-/* Handle */
 .groups-body::-webkit-scrollbar-thumb {
     background: $secondary;
-    /* Color of the scrollbar handle */
     border-radius: 8px;
-    /* Rounded corners */
 }
 
-/* Handle on hover */
 .groups-body::-webkit-scrollbar-thumb:hover {
-    background: #555;
-    /* Color of the scrollbar handle on hover */
+    opacity: 0.86;
+    transition: 0.2s ease-in;
 }

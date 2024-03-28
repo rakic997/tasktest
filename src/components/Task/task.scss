@@ -1,4 +1,5 @@
 @import '../../style/index.scss';
+@import '../UI/ui.scss';
 
 .tasks {
     position: relative;
@@ -32,13 +33,19 @@
     }
 
     &-body {
-        height: 654px;
+        height: 754px;
+        height: calc(754px - 80px);
+        overflow-y: auto;
+        overflow-x: hidden;
 
         @include mobile {
             height: auto;
             height: calc(360px - 50px);
             overflow-y: auto
         }
+    }
+    &-footer {
+        margin-top: 32px;
     }
 }
 
@@ -65,7 +72,7 @@
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
-        padding-right: 5px;
+        padding-right: 15px;
     }
 
     .complete {
@@ -112,52 +119,6 @@
     }
 }
 
-.add-task-input {
-    position: relative;
-    margin-top: 25px;
-
-    input {
-        width: 100%;
-        height: 51px;
-        background-color: $primary;
-        border-radius: 8px;
-        padding: 0 10px;
-        font-size: 16px;
-        font-weight: 400;
-        color: $tertiary;
-        font-style: italic;
-
-        &::placeholder {
-            font-size: 16px;
-            font-weight: 400;
-            color: $tertiary;
-            font-style: italic;
-        }
-    }
-
-    button {
-        position: absolute;
-        top: 50%;
-        right: 10px;
-        transform: translate(5px, -50%);
-        line-height: 5px;
-
-        svg {
-            width: 100%;
-            height: 100%;
-        }
-
-        &:hover {
-            cursor: pointer;
-
-            svg {
-                opacity: 0.89;
-                transition: 0.12s ease;
-            }
-        }
-    }
-}
-
 .task-details {
 
     &-header {
@@ -187,11 +148,11 @@
 
                 &:last-child {
                     position: relative;
-                    width: 86.76px;
+                    width: 87.75px;
                     height: 24px;
                     border: 1px solid $secondary;
                     border-radius: 8px;
-                    font-size: 12px;
+                    font-size: 11.7px;
                     font-weight: 700;
                     color: #fff;
                     padding-left: 17px;
@@ -202,6 +163,19 @@
                         left: 12.5px;
                         transform: translate(-50%, -50%);
                     }
+
+                    &:hover {
+                        cursor: pointer;
+                        transform: 0.2 ease;
+                        opacity: 0.86;
+                    }
+                }
+
+                &:disabled {
+                    pointer-events: none;
+                    background-color: red;
+                    border: 1px solid red;
+                    opacity: 0.2;
                 }
             }
         }
@@ -235,6 +209,9 @@
             margin-top: 10px;
             border-radius: 8px;
 
+            @media (min-width: 1200px) and (min-height: 500px) and (max-height: 799px) {
+                height: 300px;
+            }
             @include mobile {
                 height: 260px;
             }
@@ -301,5 +278,23 @@
             }
         }
     }
+}
 
+.tasks-body::-webkit-scrollbar {
+    width: 3px;
+    border-radius: 8px;
+}
+
+.tasks-body::-webkit-scrollbar-track {
+    background: $tertiary;
+}
+
+.tasks-body::-webkit-scrollbar-thumb {
+    background: $secondary;
+    border-radius: 8px;
+}
+
+.tasks-body::-webkit-scrollbar-thumb:hover {
+    opacity: 0.86;
+    transition: 0.2s ease-in;
 }

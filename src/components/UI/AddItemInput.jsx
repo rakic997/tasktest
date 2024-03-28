@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import './ui.scss';
+import './ui.scss'
 
 const AddItemInput = ({ placeholder, value, onChange, onClick, className, disabled }) => {
     const [error, setError] = useState('')
@@ -36,4 +36,4 @@ const AddItemInput = ({ placeholder, value, onChange, onClick, className, disabl
     );
 };
 
-export default AddItemInput;
+export default AddItemInput
