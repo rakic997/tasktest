@@ -6,9 +6,10 @@ import Modal from '../UI/Modal'
 
 const Task = ({ task, activeGroupTitle }) => {
   const [isOpen, setIsOpen] = useState(false)
+  const [showConfirmation, setShowConfirmation] = useState(false);
   const [editedTitle, setEditedTitle] = useState(task.title)
   const [editedDescription, setEditedDescription] = useState(task.description)
-  const { groups, setGroups, activeGroupId, setActiveGroupId } = useGroups()
+  const { groups, setGroups, activeGroupId } = useGroups()
 
   const handleTitleChange = (e) => {
     setEditedTitle(e.target.value)
@@ -20,7 +21,28 @@ const Task = ({ task, activeGroupTitle }) => {
 
   const toggleModal = () => {
     setIsOpen(!isOpen)
+  }
+
+  const toggleConfirmationModal = () => {
+    setIsConfirmationOpen(!isConfirmationOpen)
+  }
+
+  const handleDeleteTask = () => {
+    setShowConfirmation(true);
   };
+
+  const confirmDeleteTask = () => {
+    const updatedGroups = groups.map(group => {
+      if (group.id === activeGroupId) {
+        const updatedTasks = group.tasks.filter(groupTask => groupTask.id !== task.id);
+        return { ...group, tasks: updatedTasks }
+      }
+      return group;
+    });
+    setGroups(updatedGroups)
+    toggleConfirmationModal()
+    toggleModal()
+  }
 
   const handleCompleteTask = (e) => {
     e.stopPropagation();
@@ -38,7 +60,7 @@ const Task = ({ task, activeGroupTitle }) => {
       return group;
     });
     setGroups(updatedGroups);
-  };
+  }
 
   const handleSaveChanges = () => {
     const updatedGroups = groups.map(group => {
@@ -49,18 +71,6 @@ const Task = ({ task, activeGroupTitle }) => {
           }
           return groupTask;
         });
-        return { ...group, tasks: updatedTasks };
-      }
-      return group;
-    });
-    setGroups(updatedGroups);
-    toggleModal();
-  };
-
-  const handleDeleteTask = () => {
-    const updatedGroups = groups.map(group => {
-      if (group.id === activeGroupId) {
-        const updatedTasks = group.tasks.filter(groupTask => groupTask.id !== task.id);
         return { ...group, tasks: updatedTasks };
       }
       return group;
@@ -103,7 +113,7 @@ const Task = ({ task, activeGroupTitle }) => {
           </div>
           <div className='task-details-body'>
             <input
-              type="text"
+              type='text'
               value={editedTitle}
               onChange={handleTitleChange}
             />
@@ -113,6 +123,14 @@ const Task = ({ task, activeGroupTitle }) => {
               onChange={handleDescriptionChange}
             />
             <button className='save-button' onClick={handleSaveChanges}>Save Changes</button>
+
+            {showConfirmation && (
+              <div className='confirmation'>
+                <p>Are you sure you want to delete task?</p>
+                <button onClick={confirmDeleteTask}>Delete</button>
+                <button onClick={() => setShowConfirmation(false)}>Cancel</button>
+              </div>
+            )}
           </div>
         </div>
       </Modal>

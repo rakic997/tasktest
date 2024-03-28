@@ -1,7 +1,7 @@
 import React from 'react';
 import './modal.scss';
 
-const Modal = ({ isOpen, children, setIsOpen }) => {
+const Modal = ({ isOpen, setIsOpen, children }) => {
   if (!isOpen) return null;
 
   return (

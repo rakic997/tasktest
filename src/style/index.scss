@@ -50,6 +50,7 @@ textarea,
 select {
   font: inherit;
 }
+
 input {
   border: none;
 
@@ -58,14 +59,16 @@ input {
     outline: none;
   }
 }
+
 textarea {
   border: none;
-  
+
   &:focus,
   &:active {
     outline: none;
   }
 }
+
 button {
   background-color: unset;
   border: none;
@@ -134,4 +137,12 @@ p {
 .content {
   height: 100vh;
   @include flex-container(flex, center, center);
+}
+
+.error-message {
+  position: absolute;
+  top: -20px;
+  font-size: 12px;
+  left: 5px;
+  color: red;
 }
