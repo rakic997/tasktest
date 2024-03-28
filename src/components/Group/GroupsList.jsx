@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { v4 as uuidv4 } from 'uuid'
+import './group-list.scss';
 import { useGroups } from '../../context/GroupsContext'
 
 const GroupsList = () => {
@@ -33,13 +34,14 @@ const GroupsList = () => {
         <h2>Groups</h2>
       </div>
       <div className='groups-body'>
-        <ul className='groups-list'>
+        <ul className='groups-list' role='list'>
           {groups?.map((group) => {
             return (
               <li
                 key={group.id}
+                className='group'
                 onClick={() => setActiveGroupId(group.id)}>
-                {group.title}
+                <h6>{group.title}</h6>
               </li>
             )
           })}

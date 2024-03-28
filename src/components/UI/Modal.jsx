@@ -8,7 +8,7 @@ const Modal = ({ isOpen, children, setIsOpen }) => {
     <div className='modal-overlay' onClick={() => setIsOpen(false)}>
       <div className='modal' onClick={(e) => e.stopPropagation()}>
         <div className='modal-content'>
-          <button className='close' onClick={() => setIsOpen(false)}>Close</button>
+          {/* <button className='close' onClick={() => setIsOpen(false)}>Close</button> */}
           {children}
         </div>
       </div>

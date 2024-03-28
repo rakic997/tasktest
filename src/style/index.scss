@@ -3,6 +3,7 @@
 *::after {
   box-sizing: border-box;
 }
+
 body,
 h1,
 h2,
@@ -15,36 +16,68 @@ dl,
 dd {
   margin: 0;
 }
+
 ul[role="list"],
 ol[role="list"] {
   list-style: none;
+  padding-left: 0;
+  padding-right: 0;
 }
+
 html:focus-within {
   scroll-behavior: smooth;
 }
+
 body {
   min-height: 100vh;
   text-rendering: optimizeSpeed;
   line-height: 1.5;
 }
+
 a:not([class]) {
   text-decoration-skip-ink: auto;
 }
+
 img,
 picture {
   max-width: 100%;
   display: block;
 }
+
 input,
 button,
 textarea,
 select {
   font: inherit;
 }
+input {
+  border: none;
+
+  &:focus,
+  &:active {
+    outline: none;
+  }
+}
+textarea {
+  border: none;
+  
+  &:focus,
+  &:active {
+    outline: none;
+  }
+}
+button {
+  background-color: unset;
+  border: none;
+  outline: none;
+  box-shadow: none;
+}
+
 @media (prefers-reduced-motion: reduce) {
   html:focus-within {
-   scroll-behavior: auto;
+    scroll-behavior: auto;
   }
+
   *,
   *::before,
   *::after {
@@ -55,12 +88,50 @@ select {
   }
 }
 
-$primary: #161616;
+$primary: #1F1F1F;
 $secondary: #FCA311;
 $tertiary: #ffffff;
 
 @mixin flex-container($display: flex, $align-items: '', $justify-content: '') {
-    display: $display;
-    align-items: $align-items;
-    justify-content: $justify-content;
+  display: $display;
+  align-items: $align-items;
+  justify-content: $justify-content;
+}
+
+@mixin placeholder {
+  ::-webkit-input-placeholder {
+    @content;
+  }
+
+  :-moz-placeholder {
+    @content;
+  }
+
+  ::-moz-placeholder {
+    @content;
+  }
+
+  :-ms-input-placeholder {
+    @content;
+  }
+}
+
+body {
+  background-color: #161616;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
+  color: $tertiary;
+  margin: 0;
+}
+
+.content {
+  height: 100vh;
+  @include flex-container(flex, center, center);
 }

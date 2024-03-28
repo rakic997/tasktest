@@ -1,0 +1,172 @@
+@import '../../style/index.scss';
+
+.tasks {
+    width: 100%;
+    max-width: 428px
+}
+
+.task {
+    @include flex-container(flex, center, space-between);
+    max-width: 428px;
+    width: 100%;
+    height: 51px;
+    background-color: $primary;
+    padding: 16px 8.25px 16px 24px;
+    margin-bottom: 16px;
+    border-radius: 8px;
+
+    h6 {
+        font-size: 16px;
+        font-weight: 700;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        padding-right: 5px;
+    }
+
+    .complete {
+        line-height: 10px;
+        background-color: transparent;
+
+        svg {
+            width: 24.75px;
+        }
+    }
+}
+
+.completed {
+    background-color: transparent;
+    border: 1px solid $primary;
+
+    .complete {
+        svg {
+            rect {
+                fill: $secondary;
+            }
+        }
+    }
+}
+
+.add-task-input {
+    position: relative;
+    margin-top: 25px;
+
+    input {
+        width: 100%;
+        height: 51px;
+        background-color: $primary;
+        border-radius: 8px;
+        padding: 0 10px;
+        color: $tertiary;
+
+        &::placeholder {
+            color: $tertiary;
+        }
+    }
+
+    button {
+        position: absolute;
+        top: 50%;
+        right: 10px;
+        transform: translate(5px, -50%);
+        line-height: 5px;
+
+        svg {
+            width: 100%;
+            height: 100%;
+        }
+
+        &:hover {
+            cursor: pointer;
+
+            svg {
+                opacity: 0.89;
+                transition: 0.12s ease;
+            }
+        }
+    }
+}
+
+.task-details {
+
+    &-header {
+        @include flex-container(flex, center, space-between);
+        margin-bottom: 15px;
+
+        .button-group {
+            @include flex-container(flex, center, center);
+
+            button {
+                &:first-child {
+                    line-height: 10px;
+                    margin-right: 8px;
+                }
+                &:last-child {
+                    position: relative;
+                    width: 90px;
+                    height: 24px;
+                    border: 1px solid $secondary;
+                    border-radius: 8px;
+                    font-size: 12px;
+                    font-weight: 700;
+                    color: #fff;
+                    padding-left: 17px;
+
+                    svg {
+                        position: absolute;
+                        top: 50%;
+                        left: 14px;
+                        transform: translate(-50%, -50%);
+                    }
+                }
+            }
+        }
+    }
+
+    &-body {
+        input {
+            width: 100%;
+            background-color: transparent;
+            font-size: 24px;
+            font-weight: 700;
+            color: $tertiary;
+            margin-bottom: 10px;
+            padding-left: 0;
+        }
+
+        label {
+            font-size: 12px;
+            color: $tertiary;
+        }
+
+        textarea {
+            width: 100%;
+            height: 423px;
+            padding: 18px;
+            background-color: #161616;
+            font-size: 16px;
+            font-weight: 400;
+            line-height: 19.36px;
+            color: $tertiary;
+            margin-top: 10px;
+        }
+
+        .save-button {
+            display: block;
+            width: 100%;
+            height: 35px;
+            background-color: $secondary;
+            border-radius: 8px;
+            margin-top: 16px;
+            font-size: 16px;
+            font-weight: 700;
+            color: $tertiary;
+
+            &:hover {
+                cursor: pointer;
+                transition: 0.2s ease;
+                opacity: 0.91;
+            }
+        }
+    }
+}
